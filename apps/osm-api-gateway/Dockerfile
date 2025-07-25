@@ -29,6 +29,6 @@ COPY --from=builder /app/package.json /app/yarn.lock ./
 # Install only production dependencies
 RUN yarn install --production --frozen-lockfile
 
-EXPOSE 3010s
+EXPOSE 3010
 
-CMD ["node", "dist/main.js"] 
+CMD ["node", "dist/main.js"]

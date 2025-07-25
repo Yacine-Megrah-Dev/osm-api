@@ -12,7 +12,7 @@ services:
       - API_GATEWAY_HOST=0.0.0.0
       - API_GATEWAY_PORT=3010
       - USERS_HOST=users-app
-      - USERS_PORT=3005
+      - USERS_PORT=3006
     depends_on:
       users-app:
         condition: service_healthy
@@ -22,11 +22,11 @@ services:
       context: .
       dockerfile: apps/users-app/Dockerfile
     ports:
-      - "3005:3005"  # Matches USERS_PORT
+      - "3006:3006"  # Changed from 3005 to 3006
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - USERS_HOST=0.0.0.0
-      - USERS_PORT=3005
+      - USERS_PORT=3006
       - USERS_DB_HOST=postgres
       - USERS_DB_PORT=5432
       - USERS_DB_USERNAME=postgres
@@ -36,7 +36,7 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "3005"]
+      test: ["CMD", "nc", "-z", "localhost", "3006"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -45,7 +45,7 @@ services:
   postgres:
     image: postgres:16-alpine
     ports:
-      - "5432:5432"
+      - "5433:5432"  # Changed external port to 5433 to avoid conflict
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=5599  # Matches USERS_DB_PASSWORD

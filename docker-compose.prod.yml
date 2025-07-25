@@ -1,0 +1,64 @@
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/osm-api-gateway/Dockerfile
+    ports:
+      - "3010:3010"
+    environment:
+      - NODE_ENV=production
+      - API_GATEWAY_HOST=0.0.0.0
+      - API_GATEWAY_PORT=3010
+      - USERS_HOST=users-app
+      - USERS_PORT=3005
+    depends_on:
+      users-app:
+        condition: service_healthy
+    restart: unless-stopped
+
+  users-app:
+    build:
+      context: .
+      dockerfile: apps/users-app/Dockerfile
+    expose:
+      - "3005"
+    environment:
+      - NODE_ENV=production
+      - USERS_HOST=0.0.0.0
+      - USERS_PORT=3005
+      - USERS_DB_HOST=postgres
+      - USERS_DB_PORT=5432
+      - USERS_DB_USERNAME=postgres
+      - USERS_DB_PASSWORD=${USERS_DB_PASSWORD}
+      - USERS_DB_NAME=users_app_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "3005"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${USERS_DB_PASSWORD}
+      - POSTGRES_DB=users_app_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d users_app_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+volumes:
+  postgres_data: 

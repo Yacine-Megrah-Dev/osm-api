@@ -1,0 +1,70 @@
+GET http://127.0.0.1:3000/users
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 650
+etag: W/"28a-YbpZ3hLcSvgA6eEqmr8x9muQ/sE"
+date: Fri, 25 Jul 2025 10:32:48 GMT
+connection: close
+###
+GET http://127.0.0.1:3000/users/4
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 178
+etag: W/"b2-+6xmx8Bar3/H8oL41kU2BnaKkc8"
+date: Fri, 25 Jul 2025 09:24:25 GMT
+connection: close
+###
+POST http://127.0.0.1:3000/users
+Content-Type: application/json
+{
+    "firstName": "Freddy",
+    "lastName": "Bright",
+    "email": "freddy.bright@gmail.com"
+}
+
+HTTP/1.1 201  - Created
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 190
+etag: W/"be-ZYO2y0TrRXgdmKsobEohPS7d1gk"
+date: Fri, 25 Jul 2025 10:01:05 GMT
+connection: close
+###
+PATCH http://127.0.0.1:3000/users/6
+Content-Type: application/json
+{
+    "countryCode": "DZ",
+    "nationalNumber": "0551897718"
+}
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 226
+etag: W/"e2-qRP06cHT9TUa3BlBVu8VamqEH+0"
+date: Fri, 25 Jul 2025 10:34:44 GMT
+connection: close
+###
+DELETE http://127.0.0.1:3000/users/3
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+date: Fri, 25 Jul 2025 09:43:27 GMT
+connection: close
+content-length: 0
+###
+PATCH http://127.0.0.1:3000/users/disable/4
+
+HTTP/1.1 404  - Not Found
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 81
+etag: W/"51-Oqwb4KERAoQLWbOMiUChVGO9/lo"
+date: Fri, 25 Jul 2025 09:15:20 GMT
+connection: close
+###
+PATCH http://127.0.0.1:3000/users/enable/4

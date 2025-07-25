@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json.schemastore.org/nest-cli",
+    "collection": "@nestjs/schematics",
+    "monorepo": true,
+    "compilerOptions": {
+        "deleteOutDir": true,
+        "builder": "@nestjs/cli/webpack"
+    },
+    "projects": {
+        "osm-api-gateway": {
+            "type": "application",
+            "root": "apps/osm-api-gateway",
+            "entryFile": "main",
+            "sourceRoot": "apps/osm-api-gateway/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/osm-api-gateway/tsconfig.app.json",
+                "webpack": true
+            },
+            "generatePackageJson": true
+        },
+        "users-app": {
+            "type": "application",
+            "root": "apps/users-app",
+            "entryFile": "main",
+            "sourceRoot": "apps/users-app/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/users-app/tsconfig.app.json",
+                "webpack": true
+            },
+            "generatePackageJson": true
+        }
+    }
+}

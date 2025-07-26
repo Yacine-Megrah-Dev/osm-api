@@ -1,24 +1,21 @@
-import {
-    IsAlpha,
-    IsEmail,
-    IsOptional,
-    IsString,
-    IsStrongPassword,
-    Length,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, Length } from 'class-validator';
 import { IsPhoneNumberForRegion } from './custom-phone-validator.decorator';
 
-export class CreateUserDto {
-    @IsAlpha()
+export class RegisterDto {
+    @IsNotEmpty()
+    @IsString()
     firstName: string;
 
-    @IsAlpha()
+    @IsNotEmpty()
+    @IsString()
     lastName: string;
 
-    @IsEmail()
+    @IsNotEmpty()
+    @IsString()
     email: string;
 
-    @IsStrongPassword()
+    @IsNotEmpty()
+    @IsString()
     password: string;
 
     @IsOptional()

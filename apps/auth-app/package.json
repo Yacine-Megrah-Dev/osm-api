@@ -1,5 +1,5 @@
 {
-    "name": "osm-api-gateway",
+    "name": "users-app",
     "version": "1.0.0",
     "dependencies": {
         "@nestjs/common": "^10.0.0",

@@ -7,24 +7,30 @@ import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class UsersService {
-    constructor(@Inject('USERS_CLIENT') private usersClient: ClientProxy) { }
+    constructor(@Inject('USERS_CLIENT') private usersClient: ClientProxy) {}
 
     findAll(): Promise<UserResponseDto[] | []> {
-        return lastValueFrom(this.usersClient.send({ cmd: 'users.findAll' }, {}));
+        return lastValueFrom(
+            this.usersClient.send({ cmd: 'users.findAll' }, {}),
+        );
     }
 
     async find(id: number): Promise<UserResponseDto | null> {
-        let result = await lastValueFrom(this.usersClient.send({ cmd: 'users.findById' }, { id: +id }));
+        let result = await lastValueFrom(
+            this.usersClient.send({ cmd: 'users.findById' }, { id: +id }),
+        );
 
         if (!result) throw new NotFoundException();
 
         return result;
     }
 
-    async create(createUserDto: CreateUserDto): Promise<UserResponseDto | null> {
+    async create(
+        createUserDto: CreateUserDto,
+    ): Promise<UserResponseDto | null> {
         try {
             let result = await lastValueFrom(
-                this.usersClient.send({ cmd: 'users.create' }, createUserDto)
+                this.usersClient.send({ cmd: 'users.create' }, createUserDto),
             );
             return result;
         } catch (error) {
@@ -33,19 +39,33 @@ export class UsersService {
         }
     }
 
-    async update(id: number, updateUserDto: UpdateUserDto): Promise<UserResponseDto | null> {
-        return lastValueFrom(this.usersClient.send({ cmd: 'users.update' }, { id: +id, body: updateUserDto }));
+    async update(
+        id: number,
+        updateUserDto: UpdateUserDto,
+    ): Promise<UserResponseDto | null> {
+        return lastValueFrom(
+            this.usersClient.send(
+                { cmd: 'users.update' },
+                { id: +id, body: updateUserDto },
+            ),
+        );
     }
 
     async delete(id: number): Promise<UserResponseDto | null> {
-        return lastValueFrom(this.usersClient.send({ cmd: 'users.delete' }, { id: +id }));
+        return lastValueFrom(
+            this.usersClient.send({ cmd: 'users.delete' }, { id: +id }),
+        );
     }
 
     async disable(id: number): Promise<UserResponseDto | null> {
-        return lastValueFrom(this.usersClient.send({ cmd: 'users.disable' }, { id: +id }));
+        return lastValueFrom(
+            this.usersClient.send({ cmd: 'users.disable' }, { id: +id }),
+        );
     }
 
     async enable(id: number): Promise<UserResponseDto | null> {
-        return lastValueFrom(this.usersClient.send({ cmd: 'users.enable' }, { id: +id }));
+        return lastValueFrom(
+            this.usersClient.send({ cmd: 'users.enable' }, { id: +id }),
+        );
     }
 }

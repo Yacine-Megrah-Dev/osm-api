@@ -4,9 +4,20 @@
     "monorepo": true,
     "compilerOptions": {
         "deleteOutDir": true,
-        "builder": "@nestjs/cli/webpack"
+        "builder": "webpack"
     },
     "projects": {
+        "auth-app": {
+            "type": "application",
+            "root": "apps/auth-app",
+            "entryFile": "main",
+            "sourceRoot": "apps/auth-app/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/auth-app/tsconfig.app.json",
+                "webpack": true
+            },
+            "generatePackageJson": true
+        },
         "osm-api-gateway": {
             "type": "application",
             "root": "apps/osm-api-gateway",

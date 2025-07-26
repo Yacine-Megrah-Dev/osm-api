@@ -4,13 +4,13 @@ import { Controller, Get } from '@nestjs/common';
 export class AppController {
     @Get()
     getWelcome() {
-        return { 
-            message: 'OSM API Gateway', 
+        return {
+            message: 'OSM API Gateway',
             version: '1.0.0',
             endpoints: {
                 users: '/users',
-                health: '/users/health'
-            }
+                health: '/health',
+            },
         };
     }
 
@@ -18,4 +18,4 @@ export class AppController {
     getHealth() {
         return { status: 'ok', service: 'api-gateway' };
     }
-} 
+}

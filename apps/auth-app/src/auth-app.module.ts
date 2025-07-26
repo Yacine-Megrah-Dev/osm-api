@@ -1,10 +1,9 @@
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthAppController } from './auth-app.controller';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { UsersModule } from './users/users.module';
-import { asyncConnectionOptions } from './database/config/configuration';
-import { DataSource } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -12,8 +11,8 @@ import { DataSource } from 'typeorm';
             isGlobal: true,
             envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
         }),
-        TypeOrmModule.forRootAsync(asyncConnectionOptions),
         UsersModule,
+        AuthModule,
     ],
     providers: [
         {
@@ -21,7 +20,6 @@ import { DataSource } from 'typeorm';
             useClass: ClassSerializerInterceptor,
         },
     ],
+    controllers: [AuthAppController],
 })
-export class UsersAppModule {
-    constructor(private dataSource: DataSource) {}
-}
+export class AuthAppModule {}

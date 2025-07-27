@@ -6,9 +6,9 @@ export class AppController {
     getWelcome() {
         return {
             message: 'OSM API Gateway',
-            version: '1.0.0',
+            version: '1.2.0',
             endpoints: {
-                users: '/users',
+                auth: '/auth',
                 health: '/health',
             },
         };

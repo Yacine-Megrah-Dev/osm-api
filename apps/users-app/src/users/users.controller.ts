@@ -20,11 +20,6 @@ import { UserResponseDto } from 'apps/osm-api-gateway/src/users/dto/get-user.dto
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @Get('health')
-    async health() {
-        return { status: 'ok' };
-    }
-
     @MessagePattern({ cmd: 'users.create' })
     async create(
         @Payload() createUserDto: CreateUserDto,

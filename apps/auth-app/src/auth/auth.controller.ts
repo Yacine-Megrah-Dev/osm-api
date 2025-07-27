@@ -1,13 +1,13 @@
 import { Controller } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    @MessagePattern({ cmd: 'register' })
-    register(data: any) {
+    @MessagePattern({ cmd: 'auth.register' })
+    async register(@Payload() data: any) {
         try {
             return this.authService.register(data);
         } catch {
@@ -15,8 +15,8 @@ export class AuthController {
         }
     }
 
-    @MessagePattern({ cmd: 'login' })
-    login(data: any) {
+    @MessagePattern({ cmd: 'auth.login' })
+    async login(@Payload() data: any) {
         try {
             return this.authService.login(data);
         } catch {
@@ -24,8 +24,8 @@ export class AuthController {
         }
     }
 
-    @MessagePattern({ cmd: 'validate-token' })
-    validate(token: string) {
+    @MessagePattern({ cmd: 'auth.validate' })
+    async validate(@Payload('token') token: string) {
         try {
             return this.authService.validateToken(token);
         } catch {

@@ -21,6 +21,9 @@ export class User extends CoreEntity {
     @Column({ unique: true })
     email: string;
 
+    @Column()
+    password: string;
+
     @Column({ nullable: true })
     countryCode: string; // e.g., 'US', 'DZ'
 

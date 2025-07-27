@@ -12,14 +12,15 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
     constructor(private usersRepository: Repository<User>) {}
 
-    async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
-        const { password, ...Data } = createUserDto;
+    async create(createUserDto: CreateUserDto): Promise<UserResponseDto | null> {
+        const password = createUserDto.password
+        try{
+            createUserDto.password = await bcrypt.hash(password, 10);
+        }catch{
+            throw new Error('user creation error (failed to hash)');
+        }
 
-        const hashed = bcrypt.hash(password, 10);
-
-        const toCreate = { ...Data, password: hashed };
-
-        let user = this.usersRepository.create(toCreate);
+        let user = this.usersRepository.create(createUserDto);
 
         console.log(`new user created ${user}`);
 

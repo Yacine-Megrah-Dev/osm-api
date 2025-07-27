@@ -8,31 +8,23 @@ import { lastValueFrom } from 'rxjs';
 export class UsersService {
     constructor(@Inject('USERS_CLIENT') private usersClient: ClientProxy) {}
     async find(id: number) {
-        let result = await lastValueFrom(
+        return await lastValueFrom(
             this.usersClient.send({ cmd: 'users.findById' }, { id: +id }),
         );
-        return result;
     }
 
     async create(createUserDto: CreateUserDto) {
-        try {
-            let result = await lastValueFrom(
-                this.usersClient.send({ cmd: 'users.create' }, createUserDto),
-            );
-            return result;
-        } catch (error) {
-            console.error('Failed to create user:', error);
-            throw new Error('User creation failed');
-        }
+        return await lastValueFrom(
+            this.usersClient.send({ cmd: 'users.create' }, createUserDto),
+        );
     }
 
     async findByEmail(email: string) {
-        let result = await lastValueFrom(
+        return await lastValueFrom(
             this.usersClient.send(
                 { cmd: 'users.findByEmail' },
                 { email: email },
             ),
         );
-        return result;
     }
 }

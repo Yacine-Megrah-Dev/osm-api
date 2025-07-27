@@ -10,6 +10,7 @@ export class AuthService {
         private usersService: UsersService,
         private jwtService: JwtService,
     ) {}
+    
     async register(createUserDto: CreateUserDto) {
         return this.usersService.create(createUserDto);
     }

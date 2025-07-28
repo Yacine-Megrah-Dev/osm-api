@@ -2,25 +2,25 @@ import { Injectable, Dependencies } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserResponseDto } from 'apps/osm-api-gateway/src/users/dto/get-user.dto';
+import { CreateUserDto } from '@lib/dto/create-user';
+import { UpdateUserDto } from '@lib/dto/update-user';
 import * as bcrypt from 'bcrypt';
+// Removed DTO and transformer for microservice raw entity usage
 
 @Injectable()
 @Dependencies(getRepositoryToken(User))
 export class UsersService {
     constructor(private usersRepository: Repository<User>) {}
 
-    async create(createUserDto: CreateUserDto): Promise<UserResponseDto | null> {
-        const password = createUserDto.password
-        try{
+    async create(createUserDto: CreateUserDto): Promise<User | null> {
+        const password = createUserDto.password;
+        try {
             createUserDto.password = await bcrypt.hash(password, 10);
-        }catch{
+        } catch {
             throw new Error('user creation error (failed to hash)');
         }
 
-        let user = this.usersRepository.create(createUserDto);
+        const user = this.usersRepository.create(createUserDto);
 
         console.log(`new user created ${user}`);
 
@@ -43,7 +43,7 @@ export class UsersService {
         id: number,
         updateUserDto: UpdateUserDto,
     ): Promise<User | null> {
-        let user = await this.usersRepository.findOneBy({ id: +id });
+        const user = await this.usersRepository.findOneBy({ id: +id });
 
         if (!user) return null;
 
@@ -53,13 +53,13 @@ export class UsersService {
     }
 
     async remove(id: number): Promise<User | null> {
-        let user = await this.usersRepository.findOneBy({ id: +id });
+        const user = await this.usersRepository.findOneBy({ id: +id });
         if (!user) return null;
         return this.usersRepository.remove(user);
     }
 
     async disable(id: number): Promise<User | null> {
-        let user = await this.usersRepository.findOneBy({ id: +id });
+        const user = await this.usersRepository.findOneBy({ id: +id });
 
         if (!user) return null;
 
@@ -69,7 +69,7 @@ export class UsersService {
     }
 
     async enable(id: number): Promise<User | null> {
-        let user = await this.usersRepository.findOneBy({ id: +id });
+        const user = await this.usersRepository.findOneBy({ id: +id });
 
         if (!user) return null;
 

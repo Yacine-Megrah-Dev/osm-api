@@ -30,6 +30,9 @@ export class User extends CoreEntity {
     @Column({ nullable: true })
     nationalNumber: string; // e.g., '2351897718' or '770000000'
 
+    @Column({ nullable: true })
+    image: string; // e.g., '2351897718' or '770000000'
+
     @Column({ default: true })
     declare isActive: boolean;
 

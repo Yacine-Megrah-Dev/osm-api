@@ -14,11 +14,17 @@ export class UserResponseDto {
     @Expose()
     email: string;
 
+    @Exclude()
+    password: string;
+
     @Expose()
     countryCode: string;
 
     @Expose()
     nationalNumber: string;
+
+    @Expose()
+    image: string;
 
     @Expose()
     createdAt: Date;

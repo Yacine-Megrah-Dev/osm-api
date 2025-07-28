@@ -19,7 +19,11 @@
         "noFallthroughCasesInSwitch": false,
         "paths": {
             "@app/common": ["libs/common/src"],
-            "@app/common/*": ["libs/common/src/*"]
+            "@app/common/*": ["libs/common/src/*"],
+            "@lib/dto/user-response": ["libs/shared/dto/user-response.dto.ts"],
+            "@lib/dto/create-user": ["libs/shared/dto/create-user.dto.ts"],
+            "@lib/dto/update-user": ["libs/shared/dto/update-user.dto.ts"],
+            "@lib/validators/custom-phone": ["libs/shared/validators/custom-phone-validator.decorator.ts"]
         }
     }
 }

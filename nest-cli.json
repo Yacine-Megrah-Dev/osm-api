@@ -18,6 +18,16 @@
             },
             "generatePackageJson": true
         },
+        "items-app": {
+            "type": "application",
+            "root": "apps/items-app",
+            "entryFile": "main",
+            "sourceRoot": "apps/items-app/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/items-app/tsconfig.app.json"
+            },
+            "generatePackageJson": true
+        },
         "osm-api-gateway": {
             "type": "application",
             "root": "apps/osm-api-gateway",

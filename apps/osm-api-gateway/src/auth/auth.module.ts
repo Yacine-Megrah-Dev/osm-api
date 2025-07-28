@@ -15,6 +15,8 @@ import { ConfigService } from '@nestjs/config';
                     options: {
                         host: configService.get('AUTH_HOST') || 'localhost',
                         port: configService.get<number>('AUTH_PORT') || 3007,
+                        retryAttempts: 3,
+                        retryDelay: 10,
                     },
                 }),
             },

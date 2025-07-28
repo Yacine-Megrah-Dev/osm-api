@@ -12,6 +12,7 @@
         "start:dev": "nest start --watch",
         "start:users-app": "nest start users-app",
         "start:users-app:dev": "nest start users-app --watch",
+        "start:items-app:dev": "nest start items-app --watch",
         "start:debug": "nest start --debug --watch",
         "start:prod": "node dist/apps/osm-app/main",
         "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

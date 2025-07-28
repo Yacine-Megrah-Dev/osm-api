@@ -18,6 +18,8 @@ import { UsersController } from './users.controller';
                             configService.get('USERS_PORT') || '3005',
                             10,
                         ),
+                        retryAttempts: 3,
+                        retryDelay: 10,
                     },
                 }),
             },

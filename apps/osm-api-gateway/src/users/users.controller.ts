@@ -45,7 +45,7 @@ export class UsersController {
         @Param('id') id: number,
         @Body() updateUserDto: UpdateUserDto,
     ) {
-        let result = await this.usersService.update(+id, updateUserDto);
+        const result = await this.usersService.update(+id, updateUserDto);
 
         if (!result) {
             throw new NotFoundException();

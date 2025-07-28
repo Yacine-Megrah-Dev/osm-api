@@ -10,6 +10,10 @@ async function bootstrap() {
     );
     app.useGlobalPipes(new ValidationPipe());
     const configService = app.get(ConfigService);
-    await app.listen(configService.get('API_GATEWAY_PORT') ?? 3000);
+    app.enableCors();
+    await app.listen(configService.get<number>('API_GATEWAY_PORT') ?? 3000);
+    console.log(
+        `Api Gateway running on ${configService.get<number>('API_GATEWAY_PORT')}`,
+    );
 }
 bootstrap();

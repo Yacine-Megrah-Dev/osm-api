@@ -1,9 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { Exclude, Expose } from 'class-transformer';
-import { User } from '../entities/user.entity';
 
-@Exclude()
-export class UserResponseDto extends PartialType(User) {
+@Exclude({ toPlainOnly: true })
+export class UserResponseDto {
     @Expose()
     id: number;
 
@@ -15,6 +13,9 @@ export class UserResponseDto extends PartialType(User) {
 
     @Expose()
     email: string;
+
+    @Exclude()
+    password: string;
 
     @Expose()
     countryCode: string;

@@ -1,7 +1,8 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AuthAppModule } from './auth-app.module';
 import { AsyncMicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
     const app = await NestFactory.createMicroservice<AsyncMicroserviceOptions>(
@@ -17,6 +18,11 @@ async function bootstrap() {
             }),
         },
     );
+
+    app.useGlobalInterceptors(
+        new ClassSerializerInterceptor(app.get(Reflector)),
+    );
+    app.useGlobalPipes(new ValidationPipe());
 
     await app.listen();
 

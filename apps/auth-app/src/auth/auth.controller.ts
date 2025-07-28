@@ -19,8 +19,8 @@ export class AuthController {
     async login(@Payload() data: any) {
         try {
             return this.authService.login(data);
-        } catch {
-            throw new Error('Bad Login Credentials');
+        } catch (err) {
+            throw new Error(`${err}\nBad Login Credentials`);
         }
     }
 

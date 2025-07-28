@@ -10,7 +10,7 @@ export class AuthService {
         private usersService: UsersService,
         private jwtService: JwtService,
     ) {}
-    
+
     async register(createUserDto: CreateUserDto) {
         return this.usersService.create(createUserDto);
     }
@@ -19,7 +19,7 @@ export class AuthService {
         const user = await this.usersService.findByEmail(email);
 
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            return null;
+            return { status: 404, message: 'Email doesnt exist' };
         }
         const token = this.jwtService.sign({ sub: user.id, email: user.email });
         return { access_token: token };

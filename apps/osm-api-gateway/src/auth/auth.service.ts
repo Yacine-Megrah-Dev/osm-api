@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { RegisterDto } from './dto/register.dto';
@@ -7,14 +7,30 @@ import { RegisterDto } from './dto/register.dto';
 export class AuthService {
     constructor(@Inject('AUTH_CLIENT') private authClient: ClientProxy) {}
     async register(registerDto: RegisterDto) {
-        console.log(`${JSON.stringify(registerDto)}`)
-        return lastValueFrom(
-            this.authClient.send({ cmd: 'auth.register' }, registerDto),
-        );
+        try {
+            console.log(`${JSON.stringify(registerDto)}`);
+            return lastValueFrom(
+                this.authClient.send({ cmd: 'auth.register' }, registerDto),
+            );
+        } catch (err) {
+            new UnauthorizedException({
+                statusCode: 401,
+                message: err + '\n Email not Found',
+            });
+        }
     }
 
     async login(data: any) {
-        return lastValueFrom(this.authClient.send({ cmd: 'auth.login' }, data));
+        try {
+            return lastValueFrom(
+                this.authClient.send({ cmd: 'auth.login' }, data),
+            );
+        } catch (err) {
+            new UnauthorizedException({
+                statusCode: 401,
+                message: err + '\n Email not Found',
+            });
+        }
     }
 
     async validateToken(token: string) {
